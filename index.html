@@ -217,6 +217,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
   /* Fix all inline grid styles */
   .sec-content > [style*="grid-template-columns"]{grid-template-columns:1fr !important}
   [style*="grid-template-columns:1fr 280px"]{grid-template-columns:1fr !important}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
   [style*="position:sticky"]{position:relative !important;top:auto !important}
   /* Contact section — fix stacked height & gap */
   #section-contact > [style*="grid-template-columns"]{grid-template-columns:1fr !important;height:auto !important;margin:0 !important}
@@ -819,9 +820,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
       </div><!-- /section-education -->
 
       <!-- ACTIVITIES -->
-      <div class="section-panel" id="section-activities" style="flex-direction:column;height:100%">
+      <div class="section-panel" id="section-activities">
         <div class="sec-banner"><div><div class="sec-banner-eyebrow">Involvement</div><div class="sec-banner-title">Leadership &amp; Activities</div></div><div class="sec-banner-num">Section 06</div></div>
-        <div class="sec-content" style="flex:1;overflow-y:auto;min-height:0">
+        <div class="sec-content">
           <div class="panel">
             <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:12px">Leadership &amp; Roles</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -996,6 +997,7 @@ function showSection(id, second, third) {
   else{ document.querySelectorAll('.tab').forEach(function(t){if(t.dataset.section===id){t.classList.add('active');}});}
   var mc = document.getElementById('mainContent');
   mc.scrollTop = 0;
+  window.scrollTo(0, 0);
   if(anchor){ setTimeout(function(){ var el=document.getElementById(anchor); if(el){ mc.scrollTo({top:el.offsetTop-20,behavior:'smooth'}); } }, 50); }
 }
 window.addEventListener('load',function(){
