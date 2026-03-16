@@ -61,7 +61,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 .topbar-link:hover{color:var(--text)}
 
 /* CONTENT */
-.content{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden}
+.content{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .content::-webkit-scrollbar{width:3px}
 .content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
@@ -200,13 +200,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:768px){
-  html,body{overflow:auto}
-  .app{flex-direction:column;height:auto;min-height:100vh;overflow:auto}
+  html,body{height:auto;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+  .app{flex-direction:column;height:auto;min-height:100vh;overflow:visible;padding-top:44px}
   .sidebar{display:none}
-  .topbar{display:flex}
+  .topbar{display:flex;position:fixed;top:0;left:0;right:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,.08)}
   .topbar-right{display:none}
-  .main{flex:1;display:flex;flex-direction:column;overflow:visible;min-height:0}
-  .content{flex:1;overflow:visible;height:auto}
+  .main{flex:1;display:flex;flex-direction:column;overflow:visible;height:auto}
+  .content{flex:1;overflow:visible;height:auto;-webkit-overflow-scrolling:unset}
   .section-panel.active{min-height:auto}
   .stat-row,.two-col,.three-col{grid-template-columns:1fr}
   .proj-bar-wrap{display:none}
@@ -214,6 +214,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
   .exp-date-col{padding-bottom:0}
   .sec-content{padding:14px 14px 20px}
   .panel{padding:14px 14px}
+  /* Fix all inline grid styles */
+  .sec-content > [style*="grid-template-columns"]{grid-template-columns:1fr !important}
+  [style*="grid-template-columns:1fr 280px"]{grid-template-columns:1fr !important}
+  [style*="position:sticky"]{position:relative !important;top:auto !important}
+  /* Contact section — fix stacked height & gap */
+  #section-contact > [style*="grid-template-columns"]{grid-template-columns:1fr !important;height:auto !important;margin:0 !important}
+  #section-contact [style*="padding:56px 48px"]{padding:36px 24px !important}
 }
 
 .proj-entry{border-bottom:1px solid var(--border)}
@@ -230,7 +237,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 @media(max-width:1000px){
   #proj-alz [style*="grid-template-columns:minmax"],
   #proj-mood [style*="grid-template-columns:minmax"],
-  #proj-chess [style*="grid-template-columns:minmax"]{
+  #proj-chess [style*="grid-template-columns:minmax"],
+  #proj-querymind [style*="grid-template-columns:minmax"]{
     grid-template-columns:1fr !important;
   }
 }
@@ -287,6 +295,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
     <div class="topbar">
       <div class="topbar-tabs">
         <div class="tab active" data-section="overview" onclick="showSection('overview',null,this)">Overview</div>
+        <div class="tab" data-section="about" onclick="showSection('about',null,this)">About</div>
         <div class="tab" data-section="projects" onclick="showSection('projects',null,this)">Projects</div>
         <div class="tab" data-section="experience" onclick="showSection('experience',null,this)">Experience</div>
         <div class="tab" data-section="education" onclick="showSection('education',null,this)">Education</div>
@@ -1011,4 +1020,13 @@ document.addEventListener('DOMContentLoaded', function(){
     } else {
       el.textContent = word.substring(0, ci - 1);
       ci--;
-      if
+      if(ci === 0){ deleting = false; wi = (wi + 1) % words.length; pause = 10; setTimeout(type, 80); }
+      else { setTimeout(type, 80); }
+    }
+  }
+  type();
+})();
+});
+</script>
+</body>
+</html>
